@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Search" nav="search" description="Search every shelf, source, note and essay.">
+  <header class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">Find anything</div>
+      <h1>Search the library</h1>
+      <p class="lede">Full-text across every shelf, source, note, essay and page. The index is built at deploy time by Pagefind — nothing leaves your browser.</p>
+    </div>
+  </header>
+  <section class="tight">
+    <div class="narrow">
+      <div id="search"></div>
+      <p id="search-fallback" class="muted" hidden>
+        The search index only exists in a production build. Run <code class="mono">npm run build && npm run preview</code>, or use the deployed site.
+      </p>
+    </div>
+  </section>
+
+  <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <script is:inline>
+    (function () {
+      var s = document.createElement('script');
+      s.src = '/pagefind/pagefind-ui.js';
+      s.onload = function () {
+        new PagefindUI({ element: '#search', showSubResults: true, showImages: false, autofocus: true });
+      };
+      s.onerror = function () { document.getElementById('search-fallback').hidden = false; };
+      document.head.appendChild(s);
+    })();
+  </script>
+</Base>

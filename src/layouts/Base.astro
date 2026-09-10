@@ -1,0 +1,85 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** which nav item is current */
+  nav?: 'library' | 'work' | 'writing' | 'life' | 'about' | 'projects' | 'search';
+}
+const {
+  title,
+  description = 'Pravar Kataria — index options trader at Optiver Mumbai, IIT Delhi CS. A public library of everything I am learning.',
+  nav,
+} = Astro.props;
+const fullTitle = title ? `${title} — Pravar Kataria` : 'Pravar Kataria';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const cur = (k: string) => (nav === k ? { 'aria-current': 'page' } : {});
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL('/img/pravar.jpg', Astro.site)} />
+  <meta name="theme-color" content="#FAF7F1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap">
+      <a href="/" class="mono-mark" aria-label="Home"><i></i>PK</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/library/" {...cur('library')}>Library</a></li>
+        <li><a href="/writing/" {...cur('writing')}>Writing</a></li>
+        <li><a href="/projects/" {...cur('projects')}>Projects</a></li>
+        <li><a href="/#work" {...cur('work')}>Work</a></li>
+        <li><a href="/#life" {...cur('life')}>Life</a></li>
+        <li><a href="/about/" {...cur('about')}>About</a></li>
+        <li><a href="/search/" {...cur('search')} title="Search the library">⌕</a></li>
+        <li><a href="/PravarKataria_CV.pdf" class="cta">CV ↓</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <slot />
+
+  <footer>
+    <div class="wrap">
+      <div>Pravar Kataria · Mumbai · <a href="https://github.com/Sovi11/sovi11.github.io">source</a> · built with Astro, no trackers</div>
+      <div class="socials">
+        <a href="https://github.com/Sovi11">GitHub</a> ·
+        <a href="https://linkedin.com/in/pravar-kataria">LinkedIn</a> ·
+        <a href="https://codeforces.com/profile/Sovi_11">Codeforces</a> ·
+        <a href="https://instagram.com/pravar_kataria">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // mobile nav
+    const t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+    t?.addEventListener('click', () => {
+      const open = l!.classList.toggle('open');
+      t.setAttribute('aria-expanded', String(open));
+    });
+    // scroll reveal
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>

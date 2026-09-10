@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const shelves = await getCollection('shelves');
+const title = (id: string) => shelves.find((s) => s.id === id)?.data.title ?? id;
+const essays = (await getCollection('essays')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const notes = (await getCollection('notes')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (dt: Date) => dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+---
+<Base title="Writing" nav="writing" description="Essays and working notes on markets, maths, AI, games and whatever else feels worth putting down.">
+  <header class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">Things I write</div>
+      <h1>Writing</h1>
+      <p class="lede">Occasional long-form on things I'm thinking about, and shorter working notes filed on the shelves. Finance, AI, and whatever else feels worth putting down.</p>
+    </div>
+  </header>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="eyebrow">Essays</div>
+      <div class="list">
+        {essays.map((e) => (
+          <div class="row">
+            <span class="date">{e.data.status === 'draft' ? 'Coming soon' : fmt(e.data.date)}</span>
+            <div><h3><a href={`/library/essays/${e.id}/`}>{e.data.title}</a></h3><p>{e.data.summary}</p></div>
+            <span class="chip">{title(e.data.shelf)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="tight" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="eyebrow">Notes</div>
+      <div class="list">
+        {notes.map((n) => (
+          <div class="row">
+            <span class="date">{fmt(n.data.date)}</span>
+            <div><h3><a href={`/library/notes/${n.id}/`}>{n.data.title}</a></h3><p>{n.data.summary}</p></div>
+            <span class="chip">{title(n.data.shelf)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

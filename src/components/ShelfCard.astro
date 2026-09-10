@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { shelf: CollectionEntry<'shelves'>; sources: number; notes: number; essays: number; }
+const { shelf, sources, notes, essays } = Astro.props;
+const d = shelf.data;
+---
+<a href={`/library/${shelf.id}/`} class={`shelf reveal ac-${d.accent} ${d.status === 'opening' ? 'opening' : ''}`}>
+  <div class="call">{d.callNumber}</div>
+  <h3>{d.title}</h3>
+  <p>{d.tagline}</p>
+  <div class="meta">
+    <span><b>{d.path.length}</b> stages</span>
+    <span><b>{sources}</b> sources</span>
+    <span><b>{notes + essays}</b> written</span>
+  </div>
+</a>

@@ -1,0 +1,28 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const essays = await getCollection('essays');
+  return essays.map((e) => ({ params: { slug: e.id }, props: { essay: e } }));
+}
+const { essay } = Astro.props;
+const { Content } = await render(essay);
+const shelf = await getEntry('shelves', essay.data.shelf);
+const fmt = (dt: Date) => dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+---
+<Base title={essay.data.title} nav="writing" description={essay.data.summary}>
+  <header class="art-head">
+    <div class="narrow">
+      <a href={`/library/${essay.data.shelf}/`} class="back">← {shelf?.data.title ?? 'Library'}</a>
+      <div class="art-meta" style="margin-top:18px">
+        <span class="chip verm">Essay</span>
+        {essay.data.status === 'draft' ? <span class="stamp">draft</span> : <span>{fmt(essay.data.date)}</span>}
+        {essay.data.tags.map((t) => <span>#{t}</span>)}
+      </div>
+      <h1>{essay.data.title}</h1>
+      <p class="lede">{essay.data.summary}</p>
+    </div>
+  </header>
+  <article class="narrow prose" style="padding-bottom:80px"><Content /></article>
+</Base>

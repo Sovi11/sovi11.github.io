@@ -1,0 +1,14 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { s: CollectionEntry<'sources'>['data']; }
+const { s } = Astro.props;
+---
+<div class="src">
+  <div class="type">{s.type}</div>
+  <div>
+    <h4>{s.url ? <a href={s.url} target="_blank" rel="noopener">{s.title} ↗</a> : s.title}</h4>
+    <div class="by">{s.author}{s.year ? ` · ${s.year}` : ''}</div>
+    <div class="why">{s.why}</div>
+  </div>
+  <div class="tags">{s.tags.map((t) => <span>#{t}</span>)}</div>
+</div>

@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Poker" nav="life" description="Cash games, variance, reads, and why trading desks are full of poker players.">
+  <header class="page-hero">
+    <div class="wrap">
+      <a href="/#life" class="back">← Back to home</a>
+      <div class="big" style="margin-top:22px;color:var(--verm)">♠ ♥ ♣ ♦</div>
+      <h1>Poker</h1>
+      <p class="lede">Variance, reads, and staying rational under uncertainty. It's not a coincidence that traders are drawn to this game.</p>
+    </div>
+  </header>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="eyebrow">How I play</div>
+      <h2 style="margin-bottom:12px">Cash games, mostly</h2>
+      <p class="lede" style="margin-bottom:36px">Tournaments are exciting. Cash games are where the real work is. The depth of decisions in a cash game — pot geometry, range construction, exploitative vs. GTO lines — is a different beast from tournament poker, where stack dynamics and ICM pressure dominate thinking.</p>
+      <div class="feat">
+        <article><div class="n">Why cash</div><h3>Decisions per hour</h3><p>Cash games run deeper and faster in terms of meaningful spots. You're playing more hands, making more close decisions, and getting real-time feedback on whether your reads and lines are working.</p></article>
+        <article><div class="n">The mental game</div><h3>Variance tolerance</h3><p>You can play perfectly and lose for weeks. Managing that — staying process-oriented, not results-oriented — is the same muscle you use in trading. The edge is real; the variance around it is brutal.</p></article>
+        <article><div class="n">What poker teaches</div><h3>Probabilistic thinking</h3><p>Every decision is a distribution, not a point. The best play with two aces can still lose to garbage. The habit of thinking in probabilities, not outcomes, is genuinely transferable.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="two">
+        <div>
+          <div class="eyebrow">The read</div>
+          <h2 style="margin-bottom:14px">Exploitative play</h2>
+          <p class="lede">Game theory gives you a baseline. But most players have exploitable leaks — bet-sizing tells, range imbalances, tilt patterns. Finding and adjusting to those is where the money is at recreational stakes.</p>
+          <a href="https://sovi11.github.io/gto-poker-trainer/" class="btn sm" style="margin-top:18px" target="_blank" rel="noopener">I built a trainer for exactly this →</a>
+        </div>
+        <div class="card">
+          <div class="call" style="margin-bottom:10px">Live results · 🏆 3rd place</div>
+          <h3>IITD College Poker Tournament</h3>
+          <p>Made the final table and finished third in the college-wide tournament. Multi-table format — the variance is higher, the ICM math kicks in, and surviving deep runs requires adjusting strategy as stacks shorten. Bubbled a few spots I shouldn't have and learned the hard way what ICM pressure actually feels like when it's your money on the line.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="eyebrow">The overlap</div>
+      <h2 style="margin-bottom:12px">Why traders play poker</h2>
+      <p class="lede" style="margin-bottom:24px">It's not random that trading desks are full of poker players. The overlap is structural.</p>
+      <div class="pills"><span>Thinking in EV, not outcomes</span><span>Staying calm in losing runs</span><span>Reading patterns and adjusting</span><span>Bet sizing as information</span><span>Position and timing</span><span>Exploiting systematic leaks</span><span>Bankroll management</span></div>
+      <p style="margin-top:28px"><a href="/library/games/" class="more" style="color:var(--verm);font-weight:600">The Games & Decisions shelf →</a></p>
+    </div>
+  </section>
+</Base>

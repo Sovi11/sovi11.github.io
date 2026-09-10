@@ -1,0 +1,24 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((n) => ({ params: { slug: n.id }, props: { note: n } }));
+}
+const { note } = Astro.props;
+const { Content } = await render(note);
+const shelf = await getEntry('shelves', note.data.shelf);
+const fmt = (dt: Date) => dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+---
+<Base title={note.data.title} nav="writing" description={note.data.summary}>
+  <header class="art-head">
+    <div class="narrow">
+      <a href={`/library/${note.data.shelf}/`} class="back">← {shelf?.data.title ?? 'Library'}</a>
+      <div class="art-meta" style="margin-top:18px"><span class="chip cobalt">Note</span><span>{fmt(note.data.date)}</span>{note.data.tags.map((t) => <span>#{t}</span>)}</div>
+      <h1>{note.data.title}</h1>
+      <p class="lede">{note.data.summary}</p>
+    </div>
+  </header>
+  <article class="narrow prose" style="padding-bottom:80px"><Content /></article>
+</Base>

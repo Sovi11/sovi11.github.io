@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import ShelfCard from '../../components/ShelfCard.astro';
+import { getCollection } from 'astro:content';
+
+const shelves = (await getCollection('shelves')).sort((a, b) => a.data.order - b.data.order);
+const sources = await getCollection('sources');
+const notes = await getCollection('notes');
+const essays = await getCollection('essays');
+const count = (coll: { data: { shelf: string } }[], id: string) => coll.filter((x) => x.data.shelf === id).length;
+const stages = shelves.reduce((a, s) => a + s.data.path.length, 0);
+---
+<Base title="Library" nav="library" description="A public learning library: curricula, sources and notes for markets, maths, AI, games, fundamentals and politics.">
+  <header class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">The library</div>
+      <h1>A reading room,<br /><span style="color:var(--verm);font-style:italic">kept in public.</span></h1>
+      <p class="lede">
+        Six shelves. Each is a subject I'm learning, laid out as a path — stages in the order I'd learn them —
+        with the sources that earned a place and the notes I write on the way. It's open source because a
+        curriculum gets better when strangers argue with it.
+      </p>
+      <div class="bignums" style="margin-top:36px;max-width:720px">
+        <div><b>{shelves.length}</b><span>shelves</span></div>
+        <div><b>{stages}</b><span>stages across all paths</span></div>
+        <div><b>{sources.length}</b><span>sources filed</span></div>
+        <div><b>{notes.length + essays.length}</b><span>notes & essays</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="shelf-grid">
+        {shelves.map((s) => <ShelfCard shelf={s} sources={count(sources, s.id)} notes={count(notes, s.id)} essays={count(essays, s.id)} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="narrow">
+      <div class="eyebrow">How to contribute</div>
+      <h2 style="margin-bottom:16px">Send a source</h2>
+      <div class="prose">
+        <p>Every source on every shelf is one JSON object in <code>src/content/sources.json</code>, and every note is a Markdown file. To add something:</p>
+        <ol>
+          <li>Fork <a href="https://github.com/Sovi11/sovi11.github.io">the repo</a>.</li>
+          <li>Add an entry with a <code>shelf</code>, a <code>stage</code>, and — the important part — one honest line on <em>why</em> it earned its place.</li>
+          <li>Open a pull request. I read every one.</li>
+        </ol>
+        <p>The bar is not "good book". It's "the thing I'd hand someone at that stage of that path".</p>
+      </div>
+    </div>
+  </section>
+</Base>

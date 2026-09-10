@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+const courses = [
+  ['Core CS', 'Algorithms & Data Structures', 'Where rigour meets problem-solving. The foundation for thinking clearly about complexity, correctness, and efficiency in anything computational.'],
+  ['Core CS', 'Operating Systems', 'Built extensions on xv6 — swapping with copy-on-write, memory management. Understanding what happens below the abstraction matters.'],
+  ['Systems', 'Computer Networks', 'Implemented TCP over UDP from scratch — including congestion control (AIMD), packet loss simulation, and reliability mechanisms.'],
+  ['Systems', 'Parallel & Distributed Computing', 'Distributed maze generation using parallel BFS/DFS with MPI. Thinking about correctness and performance in concurrent systems.'],
+  ['Mathematics', 'Linear Algebra & Probability', 'The mathematical backbone of everything in ML and finance. Spent serious time here — it compounds.'],
+  ['Intelligence', 'Machine Learning', 'Took the theory seriously — statistical learning, optimisation, generalisation bounds — before touching anything applied.'],
+  ['Hardware', 'Digital Logic & VLSI', 'Programmed an FPGA in VHDL. Understanding the physical layer changes how you reason about latency and performance.'],
+  ['Theory', 'Databases & Compilers', 'How data gets stored, queried, and how languages get parsed and executed. Surprisingly useful mental models for a lot of things.'],
+];
+---
+<Base title="IIT Delhi" nav="work" description="B.Tech Computer Science at IIT Delhi, 2021–2025: courses, record, achievements.">
+  <header class="page-hero">
+    <div class="wrap">
+      <a href="/#work" class="back">← Back to home</a>
+      <div class="eyebrow" style="margin-top:22px">2021 – 2025</div>
+      <h1>IIT Delhi</h1>
+      <p class="lede">B.Tech in Computer Science & Engineering. Four years of hard problems, good people, and the kind of environment that forces you to grow fast.</p>
+    </div>
+  </header>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="bignums">
+        <div><b>AIR 3</b><span>JEE Main 2021 · 100 percentile, twice · 1.2M+ candidates</span></div>
+        <div><b>AIR 60</b><span>JEE Advanced 2021 · India's most competitive engineering exam</span></div>
+        <div><b>DR 4</b><span>CSE department rank · 9.86 CGPA</span></div>
+        <div><b>10</b><span>SGPA — Semester 1</span></div>
+        <div><b>Top 7%</b><span>of the entire batch</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="eyebrow">What I studied</div>
+      <h2 style="margin-bottom:12px">Courses</h2>
+      <p class="lede" style="margin-bottom:32px">A CS degree at IITD covers a broad base before you specialise. The courses that actually shaped how I think:</p>
+      <div class="cards">
+        {courses.map(([k, t, d]) => (
+          <div class="card reveal"><div class="call" style="margin-bottom:10px">{k}</div><h3 style="font-size:21px">{t}</h3><p>{d}</p></div>
+        ))}
+      </div>
+      <p style="margin-top:28px;color:var(--ink-2)"><b>Thesis:</b> Pareto-optimal + Justified-Representation committees in approval voting — partial results on fractional PO + JR.</p>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Before and during IITD</div><h2>Achievements</h2></div>
+        <a href="/about/" class="btn sm">Full list →</a>
+      </div>
+      <div class="two">
+        <div class="ach">
+          <b>2021–25</b><div><strong>Reliance Foundation Scholar</strong> — 4-year full scholarship</div>
+          <b>2021</b><div><strong>KVPY Fellowship</strong> — AIR 10 (2021), AIR 85 (2020)</div>
+          <b>2023–24</b><div><strong>Quadeye Campus Scholar</strong></div>
+          <b>2019</b><div><strong>NTSE Scholar</strong> — State Rank 3</div>
+        </div>
+        <div class="ach">
+          <b>2021</b><div><strong>IMOTC / MOOC</strong> — national Maths Olympiad camp</div>
+          <b>2021</b><div><strong>INAO, INChO, INPhO</strong> — three more national camps</div>
+          <b>2018</b><div><strong>ISFO Maths Olympiad</strong> — AIR 1, Singapore</div>
+          <b>2022</b><div><strong>APhO Academic Evaluator</strong> — 28 countries' scripts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight" style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="two">
+        <div>
+          <div class="eyebrow">On campus</div>
+          <h2 style="margin-bottom:20px">Beyond the classroom</h2>
+          <div class="pills"><span>Economics Club — Coordinator</span><span>Algorithms & Coding Club — Coordinator</span><span>NSS — teaching underprivileged students</span><span>APhO 2022 — Academic Evaluator</span><span>Astronomy Society</span></div>
+        </div>
+        <div class="pull">It's hard to do a really good job on anything you don't think about in the shower.<small>Paul Graham — it ended up on my CV for a reason</small></div>
+      </div>
+    </div>
+  </section>
+</Base>

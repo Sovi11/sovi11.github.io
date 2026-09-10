@@ -1,0 +1,12 @@
+---
+interface Props { eyebrow: string; title: string; blurb?: string; href?: string; cta?: string; }
+const { eyebrow, title, blurb, href, cta } = Astro.props;
+---
+<div class="sec-head">
+  <div>
+    <div class="eyebrow">{eyebrow}</div>
+    <h2>{title}</h2>
+    {blurb && <p>{blurb}</p>}
+  </div>
+  {href && <a href={href} class="btn sm">{cta ?? 'All'} →</a>}
+</div>

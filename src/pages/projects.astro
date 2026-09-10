@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+const projects = [
+  { name: 'Hollow Chess', url: 'https://hollowchess.com', tag: 'Live · hollowchess.com', accent: 'verd',
+    blurb: 'Standard chess, but the board itself is fair game — on board turns you lift an empty square and re-attach it elsewhere. Tear a hole in a bishop\'s diagonal; grow a corridor behind the enemy king. The pieces play chess; the players play geography.',
+    built: 'Full move-legality engine on a mutable board (pins, check escapes via board actions, castling, promotion), a game notation, Elo-style ratings, matchmaking and peer-to-peer live play.' },
+  { name: 'Fold, Call or Jam', url: 'https://sovi11.github.io/gto-poker-trainer/', tag: 'Live · open source (MIT)', accent: 'verm',
+    blurb: 'A browser GTO poker trainer. Learn the math, grind the bots, print. Installable as an app, works offline, accounts optional.',
+    built: 'Hand-vs-hand equity solver (exact enumeration / Monte Carlo), heads-up Nash push/fold ranges, six bot opponents with parameterised exploitable leaks, a structured course and a deterministic daily puzzle.' },
+  { name: 'Equity research terminal', url: 'https://github.com/Sovi11', tag: 'Private · in use', accent: 'cobalt',
+    blurb: 'A Bloomberg-style terminal for Indian equities, built because the tooling for fundamentals on NSE stocks is thin and expensive.',
+    built: 'Fundamentals and analyst-target pipeline over OpenBB / yfinance, thematic screener (post-earnings drift, deep value), and a position-sizing engine — Kelly, risk parity, max-loss — for a real portfolio.' },
+  { name: 'Reddit market signal', url: 'https://github.com/Sovi11/reddit-market-signal', tag: 'Open source · research', accent: 'plum',
+    blurb: 'Does discussion volume on Indian stock-market subreddits predict subsequent equity returns better than the Nifty 50? The r/wallstreetbets literature, tested on a market with no public dataset.',
+    built: 'A read-only Reddit Data API collector that builds a longitudinal mention dataset for NSE-listed companies, and a study correlating weekly mention counts with forward returns.' },
+  { name: 'RoadWatch Mumbai', url: '#', tag: 'Prototype', accent: 'ink',
+    blurb: 'A civic accountability scoreboard for road hazards. Mumbai already has a reporting app; what it doesn\'t have is the public scoreboard of how the city performs against its own 48-hour pothole commitment.',
+    built: 'Clustering of citizen reports into hazards, a rule-based corroboration gate (one anonymous report is never evidence), ward-level SLA-breach dashboards, and an exportable formal notice.' },
+];
+---
+<Base title="Projects" nav="projects" description="Things I've built: Hollow Chess, Fold Call or Jam, an equity research terminal, and research tools.">
+  <header class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">Theory → practice</div>
+      <h1>Things I've built</h1>
+      <p class="lede">The traversal is what I find most interesting — starting from a clean idea and following it down until it runs on real data, in real time, for real people. These are the ones that shipped.</p>
+    </div>
+  </header>
+  <section class="tight">
+    <div class="wrap">
+      <div class="tl">
+        {projects.map((p) => (
+          <div class="tl-item reveal">
+            <div class="tl-when"><b>{p.name}</b><span class={`chip ${p.accent}`} style="margin-top:8px">{p.tag}</span></div>
+            <div>
+              <p style="margin-top:0;color:var(--ink);font-size:17px">{p.blurb}</p>
+              <p><b>Built:</b> {p.built}</p>
+              {p.url !== '#' && <a href={p.url} class="more" target="_blank" rel="noopener">Open →</a>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

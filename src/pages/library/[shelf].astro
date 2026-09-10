@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+import SourceRow from '../../components/SourceRow.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const shelves = await getCollection('shelves');
+  return shelves.map((shelf) => ({ params: { shelf: shelf.id }, props: { shelf } }));
+}
+const { shelf } = Astro.props;
+const d = shelf.data;
+const { Content } = await render(shelf);
+
+const sources = (await getCollection('sources')).filter((s) => s.data.shelf === shelf.id);
+const notes = (await getCollection('notes')).filter((n) => n.data.shelf === shelf.id).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const essays = (await getCollection('essays')).filter((e) => e.data.shelf === shelf.id).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const byStage = (i: number) => sources.filter((s) => s.data.stage === i + 1);
+const unstaged = sources.filter((s) => !s.data.stage);
+const fmt = (dt: Date) => dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+---
+<Base title={d.title} nav="library" description={d.tagline}>
+  <header class={`page-hero ac-${d.accent}`}>
+    <div class="wrap">
+      <a href="/library/" class="back">← Library</a>
+      <div class="art-meta" style="margin-top:22px">
+        <span class="call">{d.callNumber}</span>
+        {d.status === 'opening' && <span class="stamp">opening</span>}
+      </div>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.tagline}</p>
+    </div>
+  </header>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="two">
+        <div class="prose"><Content /></div>
+        <div class="bignums">
+          <div><b>{d.path.length}</b><span>stages on the path</span></div>
+          <div><b>{sources.length}</b><span>sources filed</span></div>
+          <div><b>{notes.length}</b><span>notes</span></div>
+          <div><b>{essays.length}</b><span>essays</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class={`tight ac-${d.accent}`} style="background:var(--paper-2)">
+    <div class="wrap">
+      <div class="eyebrow">The path</div>
+      <h2 style="margin-bottom:32px">In this order</h2>
+      <div class="path">
+        {d.path.map((stage, i) => (
+          <div class="stage">
+            <h4>{stage.title}</h4>
+            <p>{stage.desc}</p>
+            {byStage(i).length > 0 && (
+              <div class="srcs">{byStage(i).map((s) => <SourceRow s={s.data} />)}</div>
+            )}
+            {byStage(i).length === 0 && d.status === 'opening' && <p class="muted mono">— no sources filed yet —</p>}
+          </div>
+        ))}
+      </div>
+      {unstaged.length > 0 && (
+        <div style="margin-top:28px">
+          <div class="eyebrow">Unfiled</div>
+          {unstaged.map((s) => <SourceRow s={s.data} />)}
+        </div>
+      )}
+    </div>
+  </section>
+
+  {(notes.length > 0 || essays.length > 0) && (
+    <section class="tight">
+      <div class="wrap">
+        <div class="eyebrow">Written on this shelf</div>
+        <h2 style="margin-bottom:28px">Notes & essays</h2>
+        <div class="list">
+          {essays.map((e) => (
+            <div class="row">
+              <span class="date">{e.data.status === 'draft' ? 'draft' : fmt(e.data.date)}</span>
+              <div><h3><a href={`/library/essays/${e.id}/`}>{e.data.title}</a></h3><p>{e.data.summary}</p></div>
+              <span class="chip verm">Essay</span>
+            </div>
+          ))}
+          {notes.map((n) => (
+            <div class="row">
+              <span class="date">{fmt(n.data.date)}</span>
+              <div><h3><a href={`/library/notes/${n.id}/`}>{n.data.title}</a></h3><p>{n.data.summary}</p></div>
+              <span class="chip cobalt">Note</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>

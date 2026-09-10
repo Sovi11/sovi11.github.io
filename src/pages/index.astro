@@ -1,0 +1,199 @@
+---
+import Base from '../layouts/Base.astro';
+import ShelfCard from '../components/ShelfCard.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { getCollection } from 'astro:content';
+
+const shelves = (await getCollection('shelves')).sort((a, b) => a.data.order - b.data.order);
+const sources = await getCollection('sources');
+const notes = await getCollection('notes');
+const essays = (await getCollection('essays')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const count = (coll: { data: { shelf: string } }[], id: string) => coll.filter((x) => x.data.shelf === id).length;
+const shelfTitle = (id: string) => shelves.find((s) => s.id === id)?.data.title ?? id;
+---
+<Base>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Pravar Kataria · Mumbai</div>
+          <h1>Vol trader.<br /><span class="verm">Open-source</span> librarian.</h1>
+          <p class="lede">
+            I trade index options at Optiver Mumbai; IIT Delhi CS before that, Jane Street and Optiver
+            Amsterdam in between. This site is my reading room, kept in public — every shelf is a subject
+            I'm learning from the ground floor, with the path, the sources and the notes as I go.
+          </p>
+          <div class="hero-actions">
+            <a href="/library/" class="btn solid">Enter the library</a>
+            <a href="/about/" class="btn">Who I am</a>
+          </div>
+          <div class="now">
+            <b>Trading</b><span>Index options — research, execution and the loop between them.</span>
+            <b>Learning</b><span>A politics shelf, from zero. Fundamentals & valuation for the other half of a hedge fund.</span>
+            <b>Building</b><span><a href="https://hollowchess.com">Hollow Chess</a>, <a href="https://sovi11.github.io/gto-poker-trainer/">Fold Call or Jam</a>, and an equity terminal for Indian stocks.</span>
+          </div>
+        </div>
+        <div class="portrait">
+          <img src="/img/pravar.jpg" alt="Pravar Kataria" width="768" height="1024" />
+          <div class="tag"><b>Call number</b>PK 001 · Mumbai · est. 2003</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div><b>AIR 3</b><span>JEE Main 2021 · 1.2M+ candidates · 100 percentile, twice</span></div>
+        <div><b>9.86</b><span>CGPA at IIT Delhi · CSE department rank 4</span></div>
+        <div><b>4</b><span>National olympiad camps — maths, physics, chemistry, astronomy</span></div>
+        <div><b>12K+</b><span>Clash Royale trophies · top percentile globally</span></div>
+        <div><b>3</b><span>Products shipped and live — chess, poker, equities</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- LIBRARY -->
+  <section id="library">
+    <div class="wrap">
+      <SectionHead eyebrow="The library" title="Six shelves, learned in the open"
+        blurb="Each shelf is a curriculum: the stages in the order I'd learn them, the sources that earned a place, and what I've written along the way. Everything is Markdown in a public repo — if a source belongs here, send a pull request."
+        href="/library/" cta="Browse" />
+      <div class="shelf-grid">
+        {shelves.map((s) => <ShelfCard shelf={s} sources={count(sources, s.id)} notes={count(notes, s.id)} essays={count(essays, s.id)} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" style="background:var(--paper-2)">
+    <div class="wrap">
+      <SectionHead eyebrow="Where I've been" title="Work" />
+      <div class="tl">
+        <div class="tl-item reveal">
+          <div class="tl-when"><b>Optiver</b>Mumbai, India<br />Jul 2025 – Present</div>
+          <div>
+            <div class="tl-role"><h3>Quantitative Trader</h3><span class="where">Index Options Team</span></div>
+            <p>Pricing, hedging, and trading index options. Living at the intersection of vol surfaces, gamma, and market microstructure — every single day.</p>
+            <a href="/work/optiver/" class="more">What this actually involves →</a>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-when"><b>Optiver</b>Amsterdam, Netherlands<br />Summer 2024</div>
+          <div>
+            <div class="tl-role"><h3>Trading Intern</h3></div>
+            <p>Internship at the trading desk in Amsterdam. Learned what it means to operate in real markets under real conditions — no simulations, no cushion. Built and backtested a systematic strategy for trading realised vol.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-when"><b>Jane Street</b>Hong Kong · New York<br />Summer 2023</div>
+          <div>
+            <div class="tl-role"><h3>Trading Intern</h3></div>
+            <p>Early exposure to systematic thinking in financial markets. Projects on vol curve dislocations and on inefficiencies that arise from systematic behavioural tendencies in market participants. The experience that set the direction for everything that followed.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-when"><b>IIT Delhi</b>New Delhi, India<br />2021 – 2025</div>
+          <div>
+            <div class="tl-role"><h3>B.Tech, Computer Science & Engineering</h3></div>
+            <p>Four years of algorithms, systems, machine learning, and the kind of mathematical rigour that actually sticks. 9.86 CGPA, department rank 4.</p>
+            <a href="/work/iitd/" class="more">Courses, achievements & more →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section id="interests">
+    <div class="wrap">
+      <SectionHead eyebrow="What I think about" title="Interests" />
+      <div class="cards">
+        <div class="card reveal">
+          <div class="glyph">◈</div>
+          <h3>Finance & Markets</h3>
+          <p>Derivatives pricing, market microstructure, volatility surfaces, and the beautiful machinery of how prices form. The theory is deep; the practice is humbling.</p>
+          <a href="/library/markets/" class="more">The shelf</a>
+        </div>
+        <div class="card reveal">
+          <div class="glyph">⬡</div>
+          <h3>Artificial Intelligence</h3>
+          <p>All layers of the abstraction stack — from statistical learning theory and optimisation to architecture design and emergent behaviour. The field rewards people who understand the ground floor.</p>
+          <a href="/library/ai/" class="more">The shelf</a>
+        </div>
+        <div class="card reveal">
+          <div class="glyph">∿</div>
+          <h3>Theory → Practice</h3>
+          <p>The traversal is what I find most interesting — starting from a clean mathematical idea and following it down until it runs on real data, in real time, with real consequences.</p>
+          <a href="/projects/" class="more">Things I've built</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section id="thoughts" style="background:var(--paper-2)">
+    <div class="wrap">
+      <SectionHead eyebrow="Things I write" title="Writing"
+        blurb="Occasional long-form on things I'm thinking about. Finance, AI, and whatever else feels worth putting down." href="/writing/" cta="All writing" />
+      <div class="list">
+        {essays.map((e) => (
+          <div class="row reveal">
+            <span class="date">{e.data.status === 'draft' ? 'Coming soon' : e.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}</span>
+            <div><h3><a href={`/library/essays/${e.id}/`}>{e.data.title}</a></h3><p>{e.data.summary}</p></div>
+            <span class="chip">{shelfTitle(e.data.shelf)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFE -->
+  <section id="life">
+    <div class="wrap">
+      <SectionHead eyebrow="Beyond the desk" title="Life" blurb="Trading occupies most of my waking hours — but not all of them." />
+      <div class="cards">
+        <a href="/life/gaming/" class="card reveal">
+          <div class="glyph">🎮</div>
+          <h3>Gaming</h3>
+          <p>Competitive at heart. From strategy games to whatever seems interesting that week.</p>
+          <span class="more">Stats & highlights</span>
+        </a>
+        <a href="/life/bouldering/" class="card reveal">
+          <div class="glyph">🧗</div>
+          <h3>Bouldering</h3>
+          <p>Problem-solving with your whole body. The mental game is half of it.</p>
+          <span class="more">What it's about</span>
+        </a>
+        <a href="/life/poker/" class="card reveal">
+          <div class="glyph">♠</div>
+          <h3>Poker</h3>
+          <p>Probabilistic thinking, reads, and staying calm in variance. Fits the day job.</p>
+          <span class="more">The longer story</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="tight" style="background:var(--paper-2)">
+    <div class="wrap">
+      <SectionHead eyebrow="Get in touch" title="Contact" blurb="Open to conversations about finance, AI, politics, or anything genuinely interesting. Not actively looking — but never not curious." />
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="k">Email</div>
+          <div class="v"><span class="rtl">moc.liamg@airataKravarp</span></div>
+          <small>Copy it by hand — it's stored backwards so bots can't scrape it.</small>
+        </div>
+        <div class="contact-card">
+          <div class="k">Phone</div>
+          <div class="v"><span class="rtl">5354941789</span></div>
+          <small>Calls after 7 PM weekdays only.</small>
+        </div>
+      </div>
+      <div class="socials" style="margin-top:18px">
+        <a href="https://github.com/Sovi11" class="btn sm">GitHub</a>
+        <a href="https://linkedin.com/in/pravar-kataria" class="btn sm">LinkedIn</a>
+        <a href="https://instagram.com/pravar_kataria" class="btn sm">Instagram</a>
+        <a href="https://codeforces.com/profile/Sovi_11" class="btn sm">Codeforces</a>
+      </div>
+    </div>
+  </section>
+</Base>
