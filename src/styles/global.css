@@ -168,7 +168,7 @@ section.tight { padding: 64px 0; }
   transform: translate(14px, 14px); z-index: -1;
 }
 .portrait img {
-  width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: 50% 20%;
+  width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 92%;
   border-radius: 200px 200px 22px 22px; filter: saturate(1.05) contrast(1.02);
 }
 .portrait .tag {
@@ -323,6 +323,7 @@ section.tight { padding: 64px 0; }
 
 /* two-col */
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.two .bignums { grid-template-columns: 1fr 1fr; }
 .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 
 /* quote block */
