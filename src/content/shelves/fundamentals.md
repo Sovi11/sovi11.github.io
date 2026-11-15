@@ -1,7 +1,7 @@
 ---
 title: Fundamentals & Valuation
 callNumber: PK 332.63
-tagline: The other half of a hedge fund. Reading a balance sheet, valuing a business, and sizing a position — learned in public.
+tagline: The other half of markets. Reading a balance sheet, valuing a business, and sizing a position — learned in public.
 accent: cobalt
 status: open
 order: 5
